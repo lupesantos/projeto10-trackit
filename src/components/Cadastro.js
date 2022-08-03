@@ -1,38 +1,83 @@
 import styled from "styled-components";
 import track from "../assets/images/Track.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function Cadastro() {
+export default function Cadastro({
+	email,
+	setEmail,
+	name,
+	setName,
+	password,
+	setPassword,
+	image,
+	setImage,
+	token,
+	setToken,
+}) {
+	const navigate = useNavigate();
+
+	console.log(token);
+
+	function postCadastro(event) {
+		event.preventDefault();
+		const dados = {
+			email: email,
+			name: name,
+			image: image,
+			password: password,
+		};
+
+		let isMounted = true;
+
+		const request = axios.post(
+			"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
+			dados
+		);
+
+		request.then((response) => {
+			if (isMounted) setToken(response.data.token);
+			navigate("/");
+		});
+
+		return () => {
+			isMounted = false;
+		};
+	}
 	return (
 		<Container>
 			<img src={track} />
 			<input
 				type="text"
-				//value={email}
-				//onChange={(e) => setCpf(e.target.value)}
+				value={email}
+				onChange={(e) => setEmail(e.target.value)}
 				placeholder="Email"
 			/>
 
 			<input
 				type="text"
-				//value={senha}
-				//onChange={(e) => setCpf(e.target.value)}
+				value={password}
+				onChange={(e) => setPassword(e.target.value)}
 				placeholder="Senha"
 			/>
 			<input
 				type="text"
-				//value={email}
-				//onChange={(e) => setCpf(e.target.value)}
+				value={name}
+				onChange={(e) => setName(e.target.value)}
 				placeholder="Nome"
 			/>
 
 			<input
 				type="text"
-				//value={senha}
-				//onChange={(e) => setCpf(e.target.value)}
+				value={image}
+				onChange={(e) => setImage(e.target.value)}
 				placeholder="Foto"
 			/>
-			<Botao>Cadastrar</Botao>
+
+			<Botao onClick={postCadastro}>Cadastrar</Botao>
+
 			<Cadastre>Já tem uma conta? Faça login!</Cadastre>
 		</Container>
 	);

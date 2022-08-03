@@ -1,27 +1,59 @@
 import styled from "styled-components";
 import track from "../assets/images/Track.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ email, setEmail, password, setPassword }) {
+	const navigate = useNavigate();
+	const [objLogin, setObjLogin] = useState([]);
+
+	function postLogin(event) {
+		event.preventDefault();
+		const dados = {
+			email: email,
+			password: password,
+		};
+
+		let isMounted = true;
+
+		const request = axios.post(
+			"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
+			dados
+		);
+
+		request.then((response) => {
+			if (isMounted) setObjLogin(response.data);
+			navigate("/habitos");
+		});
+
+		return () => {
+			isMounted = false;
+		};
+	}
+
+	console.log(objLogin);
+
 	return (
 		<Container>
 			<img src={track} />
 			<input
 				type="text"
-				//value={email}
-				//onChange={(e) => setCpf(e.target.value)}
+				value={email}
+				onChange={(e) => setEmail(e.target.value)}
 				placeholder="Email"
 			/>
 
 			<input
 				type="text"
-				//value={senha}
-				//onChange={(e) => setCpf(e.target.value)}
+				value={password}
+				onChange={(e) => setPassword(e.target.value)}
 				placeholder="Senha"
 			/>
-			<Link to="/habitos">
-				<Botao>Entrar</Botao>
-			</Link>
+
+			<Botao onClick={postLogin}>Entrar</Botao>
+
 			<Link to="/cadastro">
 				<Cadastre>Não tem uma conta? Cadastre-se!</Cadastre>
 			</Link>

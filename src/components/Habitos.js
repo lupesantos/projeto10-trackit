@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import bob from "../assets/images/bob.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import MeusHabitos from "./MeusHabitos";
 
 export default function Habitos() {
 	return (
@@ -13,34 +15,7 @@ export default function Habitos() {
 					</Header>
 				</Link>
 
-				<MeusHabitos>
-					Meus hábitos
-					<AddHabitos>+</AddHabitos>
-				</MeusHabitos>
-
-				<CadastroHabito>
-					<InputDays>
-						<input
-							type="text"
-							//value={senha}
-							//onChange={(e) => setCpf(e.target.value)}
-							placeholder="nome do hábito"
-						/>
-						<div>
-							<Dias>D</Dias>
-							<Dias>S</Dias>
-							<Dias>T</Dias>
-							<Dias>Q</Dias>
-							<Dias>Q</Dias>
-							<Dias>S</Dias>
-							<Dias>S</Dias>
-						</div>
-					</InputDays>
-					<CadastroHabitoFooter>
-						<Cancelar>Cancelar</Cancelar>
-						<Salvar>Salvar</Salvar>
-					</CadastroHabitoFooter>
-				</CadastroHabito>
+				<MeusHabitos />
 
 				<NenhumHabito>
 					Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
@@ -108,30 +83,6 @@ const Header = styled.div`
 	}
 `;
 
-const MeusHabitos = styled.div`
-	width: 375px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-size: 23px;
-	font-weight: 400;
-	color: #126ba5;
-	padding: 20px;
-`;
-
-const AddHabitos = styled.div`
-	font-size: 27px;
-	font-weight: 400;
-	color: white;
-	width: 40px;
-	height: 35px;
-	border-radius: 5px;
-	background-color: #52b6ff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
 const Footer = styled.div`
 	width: 375px;
 	height: 70px;
@@ -169,63 +120,4 @@ const NenhumHabito = styled.div`
 	color: #666666;
 	font-size: 17px;
 	font-weight: 400;
-`;
-
-const CadastroHabito = styled.div`
-	padding: 18.5px;
-	width: 340px;
-	height: 180px;
-	border-radius: 5px;
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-
-	div {
-		display: flex;
-	}
-`;
-
-const InputDays = styled.div`
-	flex-direction: column;
-`;
-
-const CadastroHabitoFooter = styled.div`
-	gap: 10px;
-	justify-content: flex-end;
-	align-items: center;
-`;
-
-const Dias = styled.div`
-	margin-right: 5px;
-	color: #dbdbdb;
-	width: 30px;
-	height: 30px;
-	border-radius: 5px;
-	border: 1px solid #d5d5d5;
-	background-color: #ffffff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-const Salvar = styled.span`
-	margin: 4px 0;
-	font-size: 16px;
-	font-weight: 400;
-	color: white;
-	width: 84px;
-	height: 35px;
-	border-radius: 5px;
-	background-color: #52b6ff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-const Cancelar = styled.span`
-	font-size: 16px;
-	font-weight: 400;
-	line-height: 17px;
-	color: #52b6ff;
 `;
