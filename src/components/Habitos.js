@@ -1,21 +1,20 @@
 import styled from "styled-components";
 import bob from "../assets/images/bob.png";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import MeusHabitos from "./MeusHabitos";
 
-export default function Habitos() {
+export default function Habitos({ objLogin }) {
 	return (
 		<>
 			<Container>
 				<Link to="/">
 					<Header>
 						TrackIt
-						<img src={bob} />
+						<img src={bob} alt="oi" />
 					</Header>
 				</Link>
 
-				<MeusHabitos />
+				<MeusHabitos objLogin={objLogin} />
 
 				<NenhumHabito>
 					Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para

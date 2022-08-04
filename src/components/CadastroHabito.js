@@ -1,6 +1,33 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { postHab } from "./services/trackit";
 
-export default function CadastroHabito() {
+export default function CadastroHabito({ objLogin }) {
+	console.log(objLogin);
+	console.log(objLogin.token);
+	const [teste, setTeste] = useState({});
+
+	function habitoPost(event) {
+		event.preventDefault();
+
+		const body = {
+			name: "Jogar dotinha 2",
+			days: [1, 3, 5], // segunda, quarta e sexta
+		};
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${objLogin.token}`,
+			},
+		};
+
+		postHab(body, config).then((response) => {
+			setTeste(response.data);
+		});
+	}
+
+	console.log(teste);
+
 	return (
 		<StyledCadastroHabito>
 			<InputDays>
@@ -22,7 +49,7 @@ export default function CadastroHabito() {
 			</InputDays>
 			<CadastroHabitoFooter>
 				<Cancelar>Cancelar</Cancelar>
-				<Salvar>Salvar</Salvar>
+				<Salvar onClick={habitoPost}>Salvar</Salvar>
 			</CadastroHabitoFooter>
 		</StyledCadastroHabito>
 	);

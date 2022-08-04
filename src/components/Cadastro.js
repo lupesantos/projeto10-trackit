@@ -1,25 +1,25 @@
 import styled from "styled-components";
 import track from "../assets/images/Track.png";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { postCad } from "./services/trackit";
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
-export default function Cadastro({
-	email,
-	setEmail,
-	name,
-	setName,
-	password,
-	setPassword,
-	image,
-	setImage,
-	token,
-	setToken,
-}) {
+export default function Cadastro() {
+	const {
+		email,
+		setEmail,
+		name,
+		setName,
+		password,
+		setPassword,
+		image,
+		setImage,
+		token,
+		setToken,
+	} = useContext(UserContext);
+
 	const navigate = useNavigate();
-
-	console.log(token);
 
 	function postCadastro(event) {
 		event.preventDefault();
@@ -30,25 +30,14 @@ export default function Cadastro({
 			password: password,
 		};
 
-		let isMounted = true;
-
-		const request = axios.post(
-			"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
-			dados
-		);
-
-		request.then((response) => {
-			if (isMounted) setToken(response.data.token);
+		postCad(dados).then((response) => {
+			setToken(response.data.token);
 			navigate("/");
 		});
-
-		return () => {
-			isMounted = false;
-		};
 	}
 	return (
 		<Container>
-			<img src={track} />
+			<img src={track} alt="oi" />
 			<input
 				type="text"
 				value={email}

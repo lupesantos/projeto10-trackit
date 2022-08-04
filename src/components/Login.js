@@ -1,13 +1,16 @@
 import styled from "styled-components";
 import track from "../assets/images/Track.png";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { postLog } from "./services/trackit";
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
-export default function Login({ email, setEmail, password, setPassword }) {
+export default function Login() {
+	const { email, setEmail, password, setPassword, objLogin, setObjLogin } =
+		useContext(UserContext);
+
 	const navigate = useNavigate();
-	const [objLogin, setObjLogin] = useState([]);
 
 	function postLogin(event) {
 		event.preventDefault();
@@ -16,28 +19,17 @@ export default function Login({ email, setEmail, password, setPassword }) {
 			password: password,
 		};
 
-		let isMounted = true;
-
-		const request = axios.post(
-			"https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
-			dados
-		);
-
-		request.then((response) => {
-			if (isMounted) setObjLogin(response.data);
+		postLog(dados).then((response) => {
+			setObjLogin(response.data);
 			navigate("/habitos");
 		});
-
-		return () => {
-			isMounted = false;
-		};
 	}
 
 	console.log(objLogin);
 
 	return (
 		<Container>
-			<img src={track} />
+			<img src={track} alt="oi" />
 			<input
 				type="text"
 				value={email}

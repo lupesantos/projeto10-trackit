@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from "react";
 import CadastroHabito from "./CadastroHabito";
 
-export default function MeusHabitos() {
+export default function MeusHabitos({ objLogin }) {
 	const [hab, setHab] = useState(false);
 
 	return (
@@ -19,7 +19,7 @@ export default function MeusHabitos() {
 						Meus hábitos
 						<AddHabitos onClick={() => setHab(false)}>-</AddHabitos>
 					</StyledMeusHabitos>
-					<CadastroHabito />
+					<CadastroHabito objLogin={objLogin} />
 				</>
 			)}
 		</>
