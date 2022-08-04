@@ -16,4 +16,15 @@ function postHab(body, config) {
 	const promise = axios.post(`${BASE_URL}/habits`, body, config);
 	return promise;
 }
-export { postCad, postLog, postHab };
+
+function getHab(config) {
+	const promise = axios.get(`${BASE_URL}/habits`, config);
+	return promise;
+}
+
+function deleteHab(id, config) {
+	const promise = axios.delete(`${BASE_URL}/habits/${id}`, config);
+	return promise;
+}
+
+export { postCad, postLog, postHab, getHab, deleteHab };

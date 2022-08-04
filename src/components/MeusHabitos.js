@@ -1,11 +1,8 @@
-import styled from "styled-components";
-import { useState } from "react";
 import React from "react";
+import styled from "styled-components";
 import CadastroHabito from "./CadastroHabito";
 
-export default function MeusHabitos({ objLogin }) {
-	const [hab, setHab] = useState(false);
-
+export default function MeusHabitos({ objLogin, hab, setHab }) {
 	return (
 		<>
 			{!hab ? (
@@ -19,7 +16,7 @@ export default function MeusHabitos({ objLogin }) {
 						Meus hábitos
 						<AddHabitos onClick={() => setHab(false)}>-</AddHabitos>
 					</StyledMeusHabitos>
-					<CadastroHabito objLogin={objLogin} />
+					<CadastroHabito objLogin={objLogin} setHab={setHab} />
 				</>
 			)}
 		</>

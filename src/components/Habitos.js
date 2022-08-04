@@ -1,9 +1,31 @@
-import styled from "styled-components";
-import bob from "../assets/images/bob.png";
 import { Link } from "react-router-dom";
+import { getHab } from "./services/trackit";
+import { useContext } from "react";
+import { useEffect } from "react";
+import bob from "../assets/images/bob.png";
+import styled from "styled-components";
 import MeusHabitos from "./MeusHabitos";
+import UserContext from "../contexts/UserContext";
+import Habito from "./Habito";
 
-export default function Habitos({ objLogin }) {
+export default function Habitos() {
+	const { objLogin, habList, setHabList, hab, setHab } =
+		useContext(UserContext);
+
+	useEffect(() => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${objLogin.token}`,
+			},
+		};
+
+		getHab(config).then((response) => {
+			setHabList(response.data);
+		});
+	}, [hab]);
+
+	console.log(habList);
+
 	return (
 		<>
 			<Container>
@@ -14,12 +36,24 @@ export default function Habitos({ objLogin }) {
 					</Header>
 				</Link>
 
-				<MeusHabitos objLogin={objLogin} />
+				<MeusHabitos objLogin={objLogin} hab={hab} setHab={setHab} />
 
-				<NenhumHabito>
-					Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-					começar a trackear!
-				</NenhumHabito>
+				{habList.length === 0 ? (
+					<NenhumHabito>
+						Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+						começar a trackear!
+					</NenhumHabito>
+				) : (
+					habList.map((item, index) => (
+						<Habito
+							key={index}
+							name={item.name}
+							diasHabito={item.days}
+							objLogin={objLogin}
+							id={item.id}
+						/>
+					))
+				)}
 
 				<Footer>
 					<span>Hábitos</span>
@@ -34,12 +68,12 @@ export default function Habitos({ objLogin }) {
 const Container = styled.div`
 	background-color: #f2f2f2;
 	width: 375px;
-	height: 667px;
-	border: 1px solid white; /*TEMPORARIO*/
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin-top: 70px;
+	margin-bottom: 70px;
+	padding-bottom: 20px;
 
 	input::placeholder {
 		color: #bababa;
@@ -76,6 +110,7 @@ const Header = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 2;
 
 	img {
 		width: 51px;

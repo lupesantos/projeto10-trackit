@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import track from "../assets/images/Track.png";
-import { useNavigate } from "react-router-dom";
 import { postCad } from "./services/trackit";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import track from "../assets/images/Track.png";
+import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
 export default function Cadastro() {
