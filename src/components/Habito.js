@@ -2,11 +2,8 @@ import styled from "styled-components";
 import React from "react";
 import lixo from "../assets/images/trash-outline.svg";
 import { deleteHab } from "./services/trackit";
-import { useState } from "react";
 
 export default function Habito({ index, name, diasHabito, objLogin, id }) {
-	const [teste, setTeste] = useState(false);
-
 	let i = 0;
 	console.log(id);
 	const days = [

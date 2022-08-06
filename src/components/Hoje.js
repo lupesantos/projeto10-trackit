@@ -1,30 +1,14 @@
-import { Link } from "react-router-dom";
-import { getHab } from "./services/trackit";
-import { useContext } from "react";
-import { useEffect } from "react";
 import styled from "styled-components";
-import MeusHabitos from "./MeusHabitos";
 import UserContext from "../contexts/UserContext";
-import Habito from "./Habito";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import "dayjs/locale/pt";
 
-export default function Habitos() {
-	const { objLogin, habList, setHabList, hab, setHab } =
-		useContext(UserContext);
-
-	useEffect(() => {
-		const config = {
-			headers: {
-				Authorization: `Bearer ${objLogin.token}`,
-			},
-		};
-
-		getHab(config).then((response) => {
-			setHabList(response.data);
-		});
-	}, [hab]);
-
-	console.log(habList);
-
+export default function Hoje() {
+	const { objLogin } = useContext(UserContext);
+	let now = dayjs();
+	console.log(now.format("dddd,DD/MM "));
 	return (
 		<>
 			<Container>
@@ -34,37 +18,24 @@ export default function Habitos() {
 						<img src={objLogin.image} alt="oi" />
 					</Header>
 				</Link>
-
-				<MeusHabitos objLogin={objLogin} hab={hab} setHab={setHab} />
-
-				{habList.length === 0 ? (
-					<NenhumHabito>
-						Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-						começar a trackear!
-					</NenhumHabito>
-				) : (
-					habList.map((item, index) => (
-						<Habito
-							key={index}
-							name={item.name}
-							diasHabito={item.days}
-							objLogin={objLogin}
-							id={item.id}
-						/>
-					))
-				)}
-
+				<Horario>{now.locale("pt-br").format("dddd, DD/MM ")}</Horario>
 				<Footer>
 					<h1>Hábitos</h1>
-					<Link to="/hoje">
-						<Circulo>Hoje</Circulo>
-					</Link>
+
+					<Circulo>Hoje</Circulo>
+
 					<h1>Histórico</h1>
 				</Footer>
 			</Container>
 		</>
 	);
 }
+
+const Horario = styled.div`
+	font-size: 23px;
+	font-weight: 400;
+	color: #126ba5;
+`;
 
 const Container = styled.div`
 	background-color: #f2f2f2;

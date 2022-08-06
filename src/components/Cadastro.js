@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import track from "../assets/images/Track.png";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
+import { Link } from "react-router-dom";
 
 export default function Cadastro() {
 	const {
@@ -67,7 +68,9 @@ export default function Cadastro() {
 
 			<Botao onClick={postCadastro}>Cadastrar</Botao>
 
-			<Cadastre>Já tem uma conta? Faça login!</Cadastre>
+			<Link to="/">
+				<Cadastre>Já tem uma conta? Faça login!</Cadastre>
+			</Link>
 		</Container>
 	);
 }
