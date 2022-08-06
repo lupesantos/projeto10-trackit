@@ -1,18 +1,34 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { postHab } from "./services/trackit";
+import DiasCadastro from "./DiasCadastro";
 
 export default function CadastroHabito({ objLogin, setHab }) {
 	//console.log(objLogin);
 	//console.log(objLogin.token);
 	const [teste, setTeste] = useState({});
+	const [nomeHabito, setNomeHabito] = useState("");
+	const [clicado, setClicado] = useState([]);
+	const [days, setDays] = useState([
+		{ dia: "D", index: 0 },
+		{ dia: "S", index: 1 },
+		{ dia: "T", index: 2 },
+		{ dia: "Q", index: 3 },
+		{ dia: "Q", index: 4 },
+		{ dia: "S", index: 5 },
+		{ dia: "S", index: 6 },
+	]);
 
 	function habitoPost(event) {
 		event.preventDefault();
 
+		clicado.sort((a, b) => a - b);
+
+		console.log(clicado);
+
 		const body = {
-			name: "Jogar dotinha 2",
-			days: [1, 3, 5], // segunda, quarta e sexta
+			name: nomeHabito,
+			days: clicado,
 		};
 
 		const config = {
@@ -20,7 +36,7 @@ export default function CadastroHabito({ objLogin, setHab }) {
 				Authorization: `Bearer ${objLogin.token}`,
 			},
 		};
-
+		console.log(body);
 		postHab(body, config).then((response) => {
 			setTeste(response.data);
 			setHab(false);
@@ -34,18 +50,21 @@ export default function CadastroHabito({ objLogin, setHab }) {
 			<InputDays>
 				<input
 					type="text"
-					//value={senha}
-					//onChange={(e) => setCpf(e.target.value)}
+					value={nomeHabito}
+					onChange={(e) => setNomeHabito(e.target.value)}
 					placeholder="nome do hábito"
 				/>
 				<div>
-					<Dias>D</Dias>
-					<Dias>S</Dias>
-					<Dias>T</Dias>
-					<Dias>Q</Dias>
-					<Dias>Q</Dias>
-					<Dias>S</Dias>
-					<Dias>S</Dias>
+					{days.map((item, index) => (
+						<DiasCadastro
+							key={index}
+							index={item.index}
+							clicado={clicado}
+							setClicado={setClicado}
+						>
+							{item.dia}
+						</DiasCadastro>
+					))}
 				</div>
 			</InputDays>
 			<CadastroHabitoFooter>
@@ -78,19 +97,6 @@ const InputDays = styled.div`
 const CadastroHabitoFooter = styled.div`
 	gap: 10px;
 	justify-content: flex-end;
-	align-items: center;
-`;
-
-const Dias = styled.div`
-	margin-right: 5px;
-	color: #dbdbdb;
-	width: 30px;
-	height: 30px;
-	border-radius: 5px;
-	border: 1px solid #d5d5d5;
-	background-color: #ffffff;
-	display: flex;
-	justify-content: center;
 	align-items: center;
 `;
 

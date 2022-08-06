@@ -56,8 +56,6 @@ export default function Habito({ index, name, diasHabito, objLogin, id }) {
 	);
 }
 
-//<Dias key={index} day={item} />
-
 function Dias({ index, day }) {
 	return <StyledDias>{day}</StyledDias>;
 }
@@ -65,6 +63,32 @@ function Dias({ index, day }) {
 function DiasColorido({ index, day }) {
 	return <StyledDiasColoridos>{day}</StyledDiasColoridos>;
 }
+
+const StyledDiasColoridos = styled.div`
+	margin-right: 5px;
+	color: #ffffff;
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid #d5d5d5;
+	background-color: #cfcfcf;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const StyledDias = styled.div`
+	margin-right: 5px;
+	color: #dbdbdb;
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid #d5d5d5;
+	background-color: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 
 const StyledCadastroHabito = styled.div`
 	margin-top: 5px;
@@ -92,32 +116,6 @@ const StyledCadastroHabito = styled.div`
 const InputDays = styled.div`
 	flex-direction: column;
 	gap: 5px;
-`;
-
-const StyledDias = styled.div`
-	margin-right: 5px;
-	color: #dbdbdb;
-	width: 30px;
-	height: 30px;
-	border-radius: 5px;
-	border: 1px solid #d5d5d5;
-	background-color: #ffffff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-const StyledDiasColoridos = styled.div`
-	margin-right: 5px;
-	color: #ffffff;
-	width: 30px;
-	height: 30px;
-	border-radius: 5px;
-	border: 1px solid #d5d5d5;
-	background-color: #cfcfcf;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 `;
 
 const TituloHabito = styled.div`
