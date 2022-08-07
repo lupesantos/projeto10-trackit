@@ -18,6 +18,7 @@ function App() {
 	const [objLogin, setObjLogin] = useState([]);
 	const [habList, setHabList] = useState([]);
 	const [hab, setHab] = useState(false);
+	const [hoje, setHoje] = useState([]);
 
 	return (
 		<>
@@ -39,6 +40,8 @@ function App() {
 					setHabList,
 					hab,
 					setHab,
+					hoje,
+					setHoje,
 				}}
 			>
 				<BrowserRouter>

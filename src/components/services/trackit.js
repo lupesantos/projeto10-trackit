@@ -27,4 +27,14 @@ function deleteHab(id, config) {
 	return promise;
 }
 
-export { postCad, postLog, postHab, getHab, deleteHab };
+function todayHab(config) {
+	const promise = axios.get(`${BASE_URL}/habits/today`, config);
+	return promise;
+}
+
+function checkHab(id, body, config) {
+	const promise = axios.post(`${BASE_URL}/habits/${id}/check`, body, config);
+	return promise;
+}
+
+export { postCad, postLog, postHab, getHab, deleteHab, todayHab, checkHab };

@@ -4,11 +4,31 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/pt";
+import { useEffect } from "react";
+import { todayHab } from "./services/trackit";
+import HabitoHoje from "./HabitoHoje";
 
 export default function Hoje() {
 	const { objLogin } = useContext(UserContext);
 	let now = dayjs();
 	console.log(now.format("dddd,DD/MM "));
+
+	const { hoje, setHoje } = useContext(UserContext);
+
+	useEffect(() => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${objLogin.token}`,
+			},
+		};
+
+		todayHab(config).then((response) => {
+			setHoje(response.data);
+		});
+	}, [objLogin]);
+
+	console.log(hoje);
+
 	return (
 		<>
 			<Container>
@@ -17,10 +37,29 @@ export default function Hoje() {
 						TrackIt
 						<img src={objLogin.image} alt="oi" />
 					</Header>
+					<Horario>{now.locale("pt-br").format("dddd, DD/MM ")}</Horario>
+
+					{hoje.length === 0 ? (
+						<NenhumHabito>Nenhum hábito concluído ainda</NenhumHabito>
+					) : (
+						hoje.map((item, index) => (
+							<HabitoHoje
+								key={index}
+								name={item.name}
+								done={item.done}
+								current={item.currentSequence}
+								highest={item.highestSequence}
+								id={item.id}
+								objLogin={objLogin}
+							/>
+						))
+					)}
 				</Link>
-				<Horario>{now.locale("pt-br").format("dddd, DD/MM ")}</Horario>
+
 				<Footer>
-					<h1>Hábitos</h1>
+					<Link to="/habitos">
+						<h1>Hábitos</h1>
+					</Link>
 
 					<Circulo>Hoje</Circulo>
 
@@ -35,6 +74,7 @@ const Horario = styled.div`
 	font-size: 23px;
 	font-weight: 400;
 	color: #126ba5;
+	margin-top: 10px;
 `;
 
 const Container = styled.div`
@@ -108,6 +148,10 @@ const Footer = styled.div`
 	div {
 		color: white;
 	}
+
+	a {
+		color: #52b6ff;
+	}
 `;
 const Circulo = styled.div`
 	width: 91px;
@@ -125,7 +169,7 @@ const Circulo = styled.div`
 
 const NenhumHabito = styled.div`
 	padding: 20px;
-	color: #666666;
+	color: #bababa;
 	font-size: 17px;
 	font-weight: 400;
 `;
