@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import check from "../assets/images/Vector.png";
-import { checkHab } from "./services/trackit";
+import { checkHab, uncheckHab } from "./services/trackit";
 
 export default function HabitoHoje({
 	index,
@@ -10,8 +10,9 @@ export default function HabitoHoje({
 	highest,
 	id,
 	objLogin,
+	checado,
+	setChecado,
 }) {
-	console.log(objLogin.token);
 	console.log(id);
 
 	function checkHabito(event) {
@@ -25,16 +26,31 @@ export default function HabitoHoje({
 			},
 		};
 
-		checkHab(id, body, config).then(() => console.log("deu bom!"));
+		if (done === false) {
+			checkHab(id, body, config).then(() => {
+				console.log("deu bom!");
+				setChecado(!checado);
+			});
+		} else {
+			uncheckHab(id, body, config).then(() => {
+				console.log("deu bom!2");
+				setChecado(!checado);
+			});
+		}
 	}
+
 	return (
-		<Today>
+		<Today done={done}>
 			<div>
 				<h1>{name}</h1>
-				<p>Sequeência atual: {current} dias</p>
-				<p>Seu recorde: {highest} dias</p>
+				<p>
+					Sequência atual: <span>{current} dia(s)</span>
+				</p>
+				<p>
+					Seu recorde: <span>{highest} dia(s)</span>
+				</p>
 			</div>
-			<TodayCheck>
+			<TodayCheck done={done}>
 				<img onClick={checkHabito} src={check} alt="oi" />
 			</TodayCheck>
 		</Today>
@@ -62,6 +78,16 @@ const Today = styled.div`
 
 	p {
 		font-size: 13px;
+		margin-bottom: 2px;
+	}
+
+	span {
+		color: ${({ done }) => (done === true ? "#8FC549" : "#666666")};
+	}
+
+	p:nth-child(3) span {
+		color: ${({ current, highest }) =>
+			current === highest ? "#8FC549" : "#666666"};
 	}
 `;
 
@@ -69,7 +95,7 @@ const TodayCheck = styled.div`
 	width: 69px;
 	height: 69px;
 	border-radius: 5px;
-	background-color: #ebebeb;
+	background-color: ${({ done }) => (done === true ? "#8FC549" : "#ebebeb")};
 	border: 1px solid #e7e7e7;
 	display: flex;
 	justify-content: center;

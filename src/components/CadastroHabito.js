@@ -3,7 +3,12 @@ import { useState } from "react";
 import { postHab } from "./services/trackit";
 import DiasCadastro from "./DiasCadastro";
 
-export default function CadastroHabito({ objLogin, setHab }) {
+export default function CadastroHabito({
+	objLogin,
+	setHab,
+	checado,
+	setChecado,
+}) {
 	//console.log(objLogin);
 	//console.log(objLogin.token);
 	const [teste, setTeste] = useState({});
@@ -38,6 +43,7 @@ export default function CadastroHabito({ objLogin, setHab }) {
 		};
 		console.log(body);
 		postHab(body, config).then((response) => {
+			setChecado(!checado);
 			setTeste(response.data);
 			setHab(false);
 		});

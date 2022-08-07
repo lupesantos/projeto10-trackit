@@ -37,4 +37,18 @@ function checkHab(id, body, config) {
 	return promise;
 }
 
-export { postCad, postLog, postHab, getHab, deleteHab, todayHab, checkHab };
+function uncheckHab(id, body, config) {
+	const promise = axios.post(`${BASE_URL}/habits/${id}/uncheck`, body, config);
+	return promise;
+}
+
+export {
+	postCad,
+	postLog,
+	postHab,
+	getHab,
+	deleteHab,
+	todayHab,
+	checkHab,
+	uncheckHab,
+};

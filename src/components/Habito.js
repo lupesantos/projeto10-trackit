@@ -3,7 +3,15 @@ import React from "react";
 import lixo from "../assets/images/trash-outline.svg";
 import { deleteHab } from "./services/trackit";
 
-export default function Habito({ index, name, diasHabito, objLogin, id }) {
+export default function Habito({
+	index,
+	name,
+	diasHabito,
+	objLogin,
+	id,
+	checado,
+	setChecado,
+}) {
 	let i = 0;
 	console.log(id);
 	const days = [
@@ -24,6 +32,7 @@ export default function Habito({ index, name, diasHabito, objLogin, id }) {
 		};
 
 		deleteHab(id, config).then(() => {
+			setChecado(!checado);
 			console.log("deu bom!");
 		});
 	}
@@ -105,13 +114,14 @@ const StyledCadastroHabito = styled.div`
 	img {
 		width: 20px;
 		position: absolute;
-		right: 30px;
+		right: 0;
 		z-index: 0;
 	}
 `;
 
 const InputDays = styled.div`
 	flex-direction: column;
+	position: relative;
 	gap: 5px;
 `;
 

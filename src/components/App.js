@@ -8,6 +8,7 @@ import Habitos from "./Habitos";
 import Cadastro from "./Cadastro";
 import UserContext from "../contexts/UserContext";
 import Hoje from "./Hoje";
+import Historico from "./Historico";
 
 function App() {
 	const [email, setEmail] = useState("");
@@ -50,6 +51,7 @@ function App() {
 						<Route path="/cadastro" element={<Cadastro />} />
 						<Route path="/habitos" element={<Habitos />} />
 						<Route path="/hoje" element={<Hoje />} />
+						<Route path="/historico" element={<Historico />} />
 					</Routes>
 				</BrowserRouter>
 			</UserContext.Provider>

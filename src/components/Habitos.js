@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { getHab } from "./services/trackit";
 import { useContext } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import MeusHabitos from "./MeusHabitos";
 import UserContext from "../contexts/UserContext";
 import Habito from "./Habito";
 
 export default function Habitos() {
+	const [checado, setChecado] = useState(false);
 	const { objLogin, habList, setHabList, hab, setHab } =
 		useContext(UserContext);
 
@@ -21,7 +22,7 @@ export default function Habitos() {
 		getHab(config).then((response) => {
 			setHabList(response.data);
 		});
-	}, [hab]);
+	}, [checado]);
 
 	console.log(habList);
 
@@ -35,7 +36,13 @@ export default function Habitos() {
 					</Header>
 				</Link>
 
-				<MeusHabitos objLogin={objLogin} hab={hab} setHab={setHab} />
+				<MeusHabitos
+					objLogin={objLogin}
+					hab={hab}
+					setHab={setHab}
+					checado={checado}
+					setChecado={setChecado}
+				/>
 
 				{habList.length === 0 ? (
 					<NenhumHabito>
@@ -50,6 +57,8 @@ export default function Habitos() {
 							diasHabito={item.days}
 							objLogin={objLogin}
 							id={item.id}
+							checado={checado}
+							setChecado={setChecado}
 						/>
 					))
 				)}
@@ -59,7 +68,9 @@ export default function Habitos() {
 					<Link to="/hoje">
 						<Circulo>Hoje</Circulo>
 					</Link>
-					<h1>Histórico</h1>
+					<Link to="/historico">
+						<h1>Histórico</h1>
+					</Link>
 				</Footer>
 			</Container>
 		</>
@@ -121,7 +132,7 @@ const Header = styled.div`
 `;
 
 const Footer = styled.div`
-	width: 100%;
+	width: 375px;
 	height: 70px;
 	background-color: white;
 	position: fixed;
@@ -136,6 +147,9 @@ const Footer = styled.div`
 
 	div {
 		color: white;
+	}
+	a {
+		color: #52b6ff;
 	}
 `;
 const Circulo = styled.div`

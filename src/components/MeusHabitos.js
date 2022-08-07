@@ -2,7 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import CadastroHabito from "./CadastroHabito";
 
-export default function MeusHabitos({ objLogin, hab, setHab }) {
+export default function MeusHabitos({
+	objLogin,
+	hab,
+	setHab,
+	checado,
+	setChecado,
+}) {
 	return (
 		<>
 			{!hab ? (
@@ -16,7 +22,12 @@ export default function MeusHabitos({ objLogin, hab, setHab }) {
 						Meus hábitos
 						<AddHabitos onClick={() => setHab(false)}>-</AddHabitos>
 					</StyledMeusHabitos>
-					<CadastroHabito objLogin={objLogin} setHab={setHab} />
+					<CadastroHabito
+						objLogin={objLogin}
+						setHab={setHab}
+						checado={checado}
+						setChecado={setChecado}
+					/>
 				</>
 			)}
 		</>
