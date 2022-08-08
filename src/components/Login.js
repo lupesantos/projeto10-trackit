@@ -25,8 +25,6 @@ export default function Login() {
 		});
 	}
 
-	console.log(objLogin);
-
 	return (
 		<Container>
 			<img src={track} alt="oi" />

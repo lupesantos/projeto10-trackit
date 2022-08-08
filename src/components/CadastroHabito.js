@@ -9,8 +9,6 @@ export default function CadastroHabito({
 	checado,
 	setChecado,
 }) {
-	//console.log(objLogin);
-	//console.log(objLogin.token);
 	const [teste, setTeste] = useState({});
 	const [nomeHabito, setNomeHabito] = useState("");
 	const [clicado, setClicado] = useState([]);
@@ -29,8 +27,6 @@ export default function CadastroHabito({
 
 		clicado.sort((a, b) => a - b);
 
-		console.log(clicado);
-
 		const body = {
 			name: nomeHabito,
 			days: clicado,
@@ -41,15 +37,13 @@ export default function CadastroHabito({
 				Authorization: `Bearer ${objLogin.token}`,
 			},
 		};
-		console.log(body);
+
 		postHab(body, config).then((response) => {
 			setChecado(!checado);
 			setTeste(response.data);
 			setHab(false);
 		});
 	}
-
-	console.log(teste);
 
 	return (
 		<StyledCadastroHabito>

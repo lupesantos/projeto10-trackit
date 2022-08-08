@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
+import Loader from "./Loader";
 
 export default function Historico() {
 	const { objLogin } = useContext(UserContext);

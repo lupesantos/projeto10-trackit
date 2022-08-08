@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import lixo from "../assets/images/trash-outline.svg";
 import { deleteHab } from "./services/trackit";
+import Loader from "./Loader";
 
 export default function Habito({
 	index,
@@ -13,7 +14,7 @@ export default function Habito({
 	setChecado,
 }) {
 	let i = 0;
-	console.log(id);
+
 	const days = [
 		{ dia: "D", index: 0 },
 		{ dia: "S", index: 1 },
@@ -33,14 +34,13 @@ export default function Habito({
 
 		deleteHab(id, config).then(() => {
 			setChecado(!checado);
-			console.log("deu bom!");
 		});
 	}
 
 	return (
 		<>
 			{name.length === 0 ? (
-				<h1>oi</h1>
+				<Loader />
 			) : (
 				<StyledCadastroHabito>
 					<InputDays>

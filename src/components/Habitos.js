@@ -6,6 +6,7 @@ import styled from "styled-components";
 import MeusHabitos from "./MeusHabitos";
 import UserContext from "../contexts/UserContext";
 import Habito from "./Habito";
+import Loader from "./Loader";
 
 export default function Habitos() {
 	const [checado, setChecado] = useState(false);
@@ -23,8 +24,6 @@ export default function Habitos() {
 			setHabList(response.data);
 		});
 	}, [checado]);
-
-	console.log(habList);
 
 	return (
 		<>

@@ -5,7 +5,6 @@ export default function DiasCadastro({ children, index, clicado, setClicado }) {
 	const [diaClicado, setDiaClicado] = useState(false);
 
 	function reserva() {
-		console.log(index);
 		if (diaClicado === false) {
 			setDiaClicado(!diaClicado);
 			setClicado([...clicado, index]);
@@ -15,7 +14,6 @@ export default function DiasCadastro({ children, index, clicado, setClicado }) {
 		}
 	}
 
-	console.log(clicado);
 	return (
 		<>
 			<StyledDias diaClicado={diaClicado} onClick={reserva}>

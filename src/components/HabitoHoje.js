@@ -13,8 +13,6 @@ export default function HabitoHoje({
 	checado,
 	setChecado,
 }) {
-	console.log(id);
-
 	function checkHabito(event) {
 		event.preventDefault();
 
@@ -28,12 +26,10 @@ export default function HabitoHoje({
 
 		if (done === false) {
 			checkHab(id, body, config).then(() => {
-				console.log("deu bom!");
 				setChecado(!checado);
 			});
 		} else {
 			uncheckHab(id, body, config).then(() => {
-				console.log("deu bom!2");
 				setChecado(!checado);
 			});
 		}

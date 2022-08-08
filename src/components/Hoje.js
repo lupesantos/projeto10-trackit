@@ -8,12 +8,15 @@ import { useEffect } from "react";
 import { todayHab } from "./services/trackit";
 import HabitoHoje from "./HabitoHoje";
 
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import Loader from "./Loader";
+
 export default function Hoje() {
 	const [checado, setChecado] = useState(false);
 	const { objLogin } = useContext(UserContext);
 	let now = dayjs();
 	let percent = 0;
-	console.log(now.format("dddd,DD/MM "));
 
 	const { hoje, setHoje } = useContext(UserContext);
 
@@ -28,8 +31,6 @@ export default function Hoje() {
 			setHoje(response.data);
 		});
 	}, [checado]);
-
-	console.log(hoje);
 
 	const checkeds = hoje.filter((value) => value.done === true);
 
@@ -49,11 +50,15 @@ export default function Hoje() {
 				<Text>
 					<Horario>{now.locale("pt-br").format("dddd, DD/MM ")}</Horario>
 
-					<PercentHabits>{percent}% dos hábitos concluídos</PercentHabits>
+					{percent === "0.00" ? (
+						<NenhumHabito>Nenhum hábito concluído ainda</NenhumHabito>
+					) : (
+						<PercentHabits>{percent}% dos hábitos concluídos</PercentHabits>
+					)}
 				</Text>
 
 				{hoje.length === 0 ? (
-					<NenhumHabito>Nenhum hábito concluído ainda</NenhumHabito>
+					<Loader />
 				) : (
 					hoje.map((item, index) => (
 						<HabitoHoje
@@ -75,7 +80,20 @@ export default function Hoje() {
 						<h1>Hábitos</h1>
 					</Link>
 
-					<Circulo>Hoje</Circulo>
+					<Example>
+						<CircularProgressbar
+							value={percent}
+							text={`Hoje`}
+							background
+							backgroundPadding={6}
+							styles={buildStyles({
+								backgroundColor: "#52b6ff",
+								textColor: "#fff",
+								pathColor: "#fff",
+								trailColor: "transparent",
+							})}
+						/>
+					</Example>
 
 					<Link to="/historico">
 						<h1>Histórico</h1>
@@ -83,6 +101,24 @@ export default function Hoje() {
 				</Footer>
 			</Container>
 		</>
+	);
+}
+
+function Example(props) {
+	return (
+		<div style={{ marginBottom: 80 }}>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					position: "fixed",
+					left: "142.5px",
+					bottom: "10px",
+				}}
+			>
+				<div style={{ width: "91px" }}>{props.children}</div>
+			</div>
+		</div>
 	);
 }
 const Text = styled.div`
@@ -181,23 +217,10 @@ const Footer = styled.div`
 		color: #52b6ff;
 	}
 `;
-const Circulo = styled.div`
-	width: 91px;
-	height: 91px;
-	clip-path: circle(45px);
-	background-color: #52b6ff;
-	color: white;
-	position: fixed;
-	bottom: 10px;
-	left: 142.5px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
 
 const NenhumHabito = styled.div`
-	padding: 20px;
+	margin-top: 10px;
 	color: #bababa;
-	font-size: 17px;
+	font-size: 18px;
 	font-weight: 400;
 `;
